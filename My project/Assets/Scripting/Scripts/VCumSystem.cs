@@ -20,5 +20,12 @@ public class VCumSystem : MonoBehaviour
 
         float moveSpeed = 50f;
         transform.position += moveDir * moveSpeed * Time.deltaTime;
+
+        float rotateDir = 0f;
+        if (Input.GetKey(KeyCode.Q)) rotateDir = +1f;
+        if (Input.GetKey(KeyCode.E)) rotateDir = -1f;
+
+        float rotateSpeed = 300f;
+        transform.eulerAngles += new Vector3(0, rotateDir * rotateSpeed * Time.deltaTime, 0);
     }
 }
