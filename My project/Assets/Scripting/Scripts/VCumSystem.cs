@@ -13,6 +13,11 @@ public class VCumSystem : MonoBehaviour
     // Size of the edge scrolling area
     public int edgeScrollSize = 20;
 
+    //Drag mouse
+    private bool dragPanMove;
+    private Vector2 lastMousePosition;
+    public float dragPanSpeed = 2f;
+
     // Update is called once per frame
     void Update()
     {
@@ -34,6 +39,31 @@ public class VCumSystem : MonoBehaviour
         {
             inputDir.x = +1f;
         }
+        
+        //Drag movement 
+
+        #region DragMovement
+
+        if (Input.GetMouseButtonDown(1))
+        {
+            dragPanMove = true;
+            lastMousePosition = Input.mousePosition;
+        }
+        
+        if (Input.GetMouseButtonUp(1))
+        {
+            dragPanMove = false;
+        }
+
+        if (dragPanMove)
+        {
+            Vector2 mouseMovementDelta = (Vector2)Input.mousePosition - lastMousePosition;
+            inputDir.x = mouseMovementDelta.x * dragPanSpeed;
+            inputDir.z = mouseMovementDelta.y * dragPanSpeed;
+
+        }
+
+            #endregion
 
         // Determine the move direction from the input direction
         Vector3 moveDir = transform.forward * inputDir.z + transform.right * inputDir.x;
