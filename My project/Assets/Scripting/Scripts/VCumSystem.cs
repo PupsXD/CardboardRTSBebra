@@ -21,21 +21,48 @@ public class VCumSystem : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // Determine the input direction from WASD keys and edge scrolling
+        
+        
+        HandleCameraMovement();
+        
+        
+        HandleCameraRotation();
+    }
+
+    private void HandleCameraMovement()
+    {
         Vector3 inputDir = new Vector3(0, 0, 0);
-        if (Input.GetKey(KeyCode.W) || Input.mousePosition.y > Screen.height - edgeScrollSize)
+        if (Input.GetKey(KeyCode.W))
         {
             inputDir.z = +1f;
         }
-        if (Input.GetKey(KeyCode.S) || Input.mousePosition.y < edgeScrollSize)
+        if (Input.GetKey(KeyCode.S))
         {
             inputDir.z = -1f;
         }
-        if (Input.GetKey(KeyCode.A) || Input.mousePosition.x < edgeScrollSize)
+        if (Input.GetKey(KeyCode.A))
         {
             inputDir.x = -1f;
         }
-        if (Input.GetKey(KeyCode.D) || Input.mousePosition.x > Screen.width - edgeScrollSize)
+        if (Input.GetKey(KeyCode.D))
+        {
+            inputDir.x = +1f;
+        }
+        
+        //Edge scrolling
+        if ( Input.mousePosition.y > Screen.height - edgeScrollSize)
+        {
+            inputDir.z = +1f;
+        }
+        if ( Input.mousePosition.y < edgeScrollSize)
+        {
+            inputDir.z = -1f;
+        }
+        if (Input.mousePosition.x < edgeScrollSize)
+        {
+            inputDir.x = -1f;
+        }
+        if ( Input.mousePosition.x > Screen.width - edgeScrollSize)
         {
             inputDir.x = +1f;
         }
@@ -63,7 +90,7 @@ public class VCumSystem : MonoBehaviour
 
         }
 
-            #endregion
+        #endregion
 
         // Determine the move direction from the input direction
         Vector3 moveDir = transform.forward * inputDir.z + transform.right * inputDir.x;
@@ -74,7 +101,10 @@ public class VCumSystem : MonoBehaviour
         // Move the player based on the move direction and speed
         transform.position += moveDir * moveSpeed * Time.deltaTime;
 
-        // Determine the rotation direction from Q and E keys
+    }
+
+    private void HandleCameraRotation()
+    {
         float rotateDir = 0f;
         if (Input.GetKey(KeyCode.Q)) rotateDir = +1f;
         if (Input.GetKey(KeyCode.E)) rotateDir = -1f;
@@ -83,3 +113,5 @@ public class VCumSystem : MonoBehaviour
         transform.eulerAngles += new Vector3(0, rotateDir * rotateSpeed * Time.deltaTime, 0);
     }
 }
+
+
